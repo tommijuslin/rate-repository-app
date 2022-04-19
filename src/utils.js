@@ -4,9 +4,12 @@ export const shortenNumber = (number) => {
   if (number < 1000) {
     shortenedNumber = number;
     abbreviation = "";
-  } else if (number < 100000) {
+  } else if (number < 1000000) {
     shortenedNumber = (number / 1000).toFixed(1);
     abbreviation = "k";
+  } else {
+    shortenedNumber = (number / 1000000).toFixed(1);
+    abbreviation = "M";
   }
   shortenedNumber += abbreviation;
 
