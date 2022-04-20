@@ -13,14 +13,6 @@ const styles = StyleSheet.create({
     margin: 20,
     justifyContent: "space-between",
   },
-  input: {
-    color: theme.colors.textPrimary,
-    borderColor: "lightgrey",
-    borderWidth: 2,
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
   signButton: {
     backgroundColor: theme.colors.primary,
     borderRadius: 5,

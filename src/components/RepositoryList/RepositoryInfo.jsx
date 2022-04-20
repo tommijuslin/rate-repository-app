@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet } from "react-native";
-import Text from "./Text";
+import Text from "../Text";
 
-import theme from "../theme";
+import theme from "../../theme";
 
 const styles = StyleSheet.create({
   repoInfo: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepoInfo = ({ avatar, name, description, language }) => (
+const RepositoryInfo = ({ avatar, name, description, language }) => (
   <View style={styles.repoInfo}>
     <Image style={styles.avatar} source={{ uri: avatar }} />
     <View style={styles.repoInfoLine}>
@@ -44,4 +44,4 @@ const RepoInfo = ({ avatar, name, description, language }) => (
   </View>
 );
 
-export default RepoInfo;
+export default RepositoryInfo;

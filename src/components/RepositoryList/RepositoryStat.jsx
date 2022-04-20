@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import Text from "./Text";
-import { shortenNumber } from "../utils";
+import Text from "../Text";
+import { shortenNumber } from "../../utils";
 
 const RepositoryStat = ({ stat, label }) => (
   <View style={{ flexDirection: "column" }}>

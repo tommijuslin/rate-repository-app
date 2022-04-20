@@ -11,15 +11,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: theme.colors.error,
   },
-  errorBorder: {
-    borderColor: theme.colors.error,
-  },
 });
 
 const FormikTextInput = ({ name, style, ...props }) => {
   const [field, meta, helpers] = useField(name);
   const showError = meta.touched && meta.error;
-  const inputStyle = [style, meta.error && styles.errorBorder];
 
   return (
     <>
@@ -28,7 +24,6 @@ const FormikTextInput = ({ name, style, ...props }) => {
         onBlur={() => helpers.setTouched(true)}
         value={field.value}
         error={showError}
-        style={inputStyle}
         {...props}
       />
       {showError && <Text style={styles.errorText}>{meta.error}</Text>}
