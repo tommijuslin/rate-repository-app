@@ -56,6 +56,8 @@ describe("RepositoryList", () => {
       const first = repositories.edges[0].node;
       const second = repositories.edges[1].node;
 
+      // hyi
+
       within(firstRepositoryItem).getByText(first.fullName);
       within(firstRepositoryItem).getByText(first.description);
       within(firstRepositoryItem).getByText(first.language);
