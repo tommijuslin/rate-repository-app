@@ -1,17 +1,10 @@
-import { useParams } from "react-router-native";
-import { useQuery } from "@apollo/client";
-
 import Text from "../Text";
 import RepositoryItem from "./RepositoryItem";
-import { GET_REPOSITORY } from "../../graphql/queries";
+
+import useRepository from "../../hooks/useRepository";
 
 const SingleRepository = () => {
-  let { repoId } = useParams();
-
-  const { data, error, loading } = useQuery(GET_REPOSITORY, {
-    variables: { id: repoId },
-    fetchPolicy: "cache-and-network",
-  });
+  const { repository, loading, error } = useRepository();
 
   if (loading) {
     return <Text>loading...</Text>;
@@ -21,6 +14,7 @@ const SingleRepository = () => {
     console.log(error);
   }
 
-  return <RepositoryItem item={data.repository} showButton={true} />;
+  return <RepositoryItem item={repository} showButton={true} />;
 };
+
 export default SingleRepository;

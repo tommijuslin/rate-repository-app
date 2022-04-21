@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ item, showButton }) => {
   const onSubmit = () => {
-    console.log("submitted!");
     WebBrowser.openBrowserAsync(item.url);
   };
 
