@@ -6,7 +6,6 @@ import theme from "../../theme";
 const styles = StyleSheet.create({
   repoInfo: {
     flexDirection: "row",
-    margin: 20,
   },
   repoInfoLine: {
     flexDirection: "column",
