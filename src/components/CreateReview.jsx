@@ -34,6 +34,8 @@ const initialValues = {
   review: "",
 };
 
+const ItemSeparator = () => <View style={{ height: 15 }} />;
+
 const ReviewForm = ({ onSubmit }) => (
   <View style={styles.container}>
     <FormikTextInput
@@ -41,21 +43,21 @@ const ReviewForm = ({ onSubmit }) => (
       placeholder="Repository owner name"
       style={styles.input}
     />
-    <View style={{ height: 10 }}></View>
+    <ItemSeparator />
     <FormikTextInput
       name="repositoryName"
       placeholder="Repository name"
       style={styles.input}
     />
-    <View style={{ height: 10 }}></View>
+    <ItemSeparator />
     <FormikTextInput
       name="rating"
       placeholder="Rating between 0 and 100"
       style={styles.input}
     />
-    <View style={{ height: 10 }}></View>
+    <ItemSeparator />
     <FormikTextInput name="text" placeholder="Review" style={styles.input} />
-    <View style={{ height: 10 }}></View>
+    <ItemSeparator />
     <Pressable onPress={onSubmit} style={theme.button}>
       <Text style={styles.createReviewText}>Create a review</Text>
     </Pressable>
