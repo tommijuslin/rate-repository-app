@@ -28,6 +28,12 @@ const theme = {
     height: 10,
     backgroundColor: "#e1e4e8",
   },
+  button: {
+    backgroundColor: "#0366d6",
+    borderRadius: 5,
+    paddingVertical: 20,
+    justifyContent: "center",
+  },
 };
 
 export default theme;

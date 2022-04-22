@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { Link } from "react-router-native";
+import { Link, useNavigate } from "react-router-native";
 import { useQuery, useApolloClient } from "@apollo/client";
 import Constants from "expo-constants";
 
@@ -37,6 +37,7 @@ const SignOutTab = ({ onPress }) => {
 };
 
 const AppBar = () => {
+  let navigate = useNavigate();
   const client = useApolloClient();
   const authStorage = useAuthStorage();
   const { data } = useQuery(GET_CURRENT_USER);
@@ -44,6 +45,7 @@ const AppBar = () => {
   const logout = async () => {
     await authStorage.removeAccessToken();
     client.resetStore();
+    navigate("/");
   };
 
   return (
@@ -51,7 +53,10 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab to="/" text="Repositories" />
         {data && data.me ? (
-          <SignOutTab onPress={logout} />
+          <>
+            <AppBarTab to="/createreview" text="Create a review" />
+            <SignOutTab onPress={logout} />
+          </>
         ) : (
           <AppBarTab to="/sign" text="Sign in" />
         )}

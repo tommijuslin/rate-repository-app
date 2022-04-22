@@ -6,10 +6,10 @@ import useAuthStorage from "./useAuthStorage";
 const useSignIn = () => {
   const client = useApolloClient();
   const authStorage = useAuthStorage();
-  const [authenticate, result] = useMutation(AUTHENTICATE);
+  const [mutate, result] = useMutation(AUTHENTICATE);
 
   const signIn = async ({ username, password }) => {
-    const { data } = await authenticate({ variables: { username, password } });
+    const { data } = await mutate({ variables: { username, password } });
     await authStorage.setAccessToken(data.authenticate.accessToken);
     client.resetStore();
     return data;

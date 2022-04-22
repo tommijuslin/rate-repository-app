@@ -15,12 +15,6 @@ const styles = StyleSheet.create({
     margin: 20,
     justifyContent: "space-between",
   },
-  signButton: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    paddingVertical: 20,
-    justifyContent: "center",
-  },
   signText: {
     color: "white",
     textAlign: "center",
@@ -53,7 +47,7 @@ const SignInForm = ({ onSubmit }) => {
         style={styles.input}
       />
       <View style={{ height: 10 }}></View>
-      <Pressable onPress={onSubmit} style={styles.signButton}>
+      <Pressable onPress={onSubmit} style={theme.button}>
         <Text style={styles.signText}>Sign in</Text>
       </Pressable>
     </View>
