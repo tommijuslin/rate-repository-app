@@ -3,14 +3,9 @@ import { useNavigate } from "react-router-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../../hooks/useRepositories";
 
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-    backgroundColor: "#e1e4e8",
-  },
-});
+import theme from "../../theme";
 
-const ItemSeparator = () => <View style={styles.separator} />;
+const ItemSeparator = () => <View style={theme.separator} />;
 
 export const RepositoryListContainer = ({ repositories }) => {
   let navigate = useNavigate();
@@ -33,6 +28,7 @@ export const RepositoryListContainer = ({ repositories }) => {
   return (
     <FlatList
       data={repositoryNodes}
+      keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
     />

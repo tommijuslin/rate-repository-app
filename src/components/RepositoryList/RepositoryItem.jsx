@@ -13,13 +13,14 @@ const styles = StyleSheet.create({
   },
   repoStats: {
     flexDirection: "row",
-    marginVertical: 20,
+    marginTop: 20,
     marginHorizontal: 50,
     justifyContent: "space-between",
   },
   githubButton: {
     backgroundColor: theme.colors.primary,
     borderRadius: 5,
+    marginTop: 20,
     paddingVertical: 20,
     justifyContent: "center",
   },
