@@ -1,35 +1,30 @@
-import { FlatList, View, Pressable } from "react-native";
+import { FlatList, View, Pressable, StyleSheet } from "react-native";
 import { useNavigate } from "react-router-native";
-import { Picker } from "@react-native-picker/picker";
-
-import RepositoryItem from "./RepositoryItem";
-import useRepositories from "../../hooks/useRepositories";
-
-import theme from "../../theme";
 import { useState } from "react";
 
-const ItemSeparator = () => <View style={theme.separator} />;
+import OrderPicker from "./OrderPicker";
+import RepositoryItem from "./RepositoryItem";
+import useRepositories from "../../hooks/useRepositories";
+import SearchBar from "./SearchBar";
 
-const OrderPicker = ({ selectedOrder, setSelectedOrder }) => {
-  return (
-    <View style={{ backgroundColor: "#ebebeb" }}>
-      <Picker
-        style={{ marginHorizontal: 15 }}
-        selectedValue={selectedOrder}
-        onValueChange={(itemValue, itemIndex) => setSelectedOrder(itemValue)}
-      >
-        <Picker.Item label="Latest repositories" value="latest" />
-        <Picker.Item label="Highest rated repositories" value="highest" />
-        <Picker.Item label="Lowest rated repositories" value="lowest" />
-      </Picker>
-    </View>
-  );
-};
+import theme from "../../theme";
+
+const styles = StyleSheet.create({
+  topContainer: {
+    margin: 20,
+    justifyContent: "space-between",
+    height: 115,
+  },
+});
+
+const ItemSeparator = () => <View style={theme.separator} />;
 
 export const RepositoryListContainer = ({
   repositories,
   selectedOrder,
   setSelectedOrder,
+  searchKeyword,
+  setSearchKeyword,
 }) => {
   let navigate = useNavigate();
 
@@ -54,10 +49,16 @@ export const RepositoryListContainer = ({
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={
-        <OrderPicker
-          selectedOrder={selectedOrder}
-          setSelectedOrder={setSelectedOrder}
-        />
+        <View style={styles.topContainer}>
+          <SearchBar
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
+          />
+          <OrderPicker
+            selectedOrder={selectedOrder}
+            setSelectedOrder={setSelectedOrder}
+          />
+        </View>
       }
       renderItem={renderItem}
     />
@@ -65,15 +66,21 @@ export const RepositoryListContainer = ({
 };
 
 const RepositoryList = () => {
-  const [selectedOrder, setSelectedOrder] = useState("latest");
+  const [selectedOrder, setSelectedOrder] = useState();
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const { repositories } = useRepositories({ selectedOrder });
+  const { repositories } = useRepositories({
+    selectedOrder,
+    searchKeyword,
+  });
 
   return (
     <RepositoryListContainer
       repositories={repositories}
       selectedOrder={selectedOrder}
       setSelectedOrder={setSelectedOrder}
+      searchKeyword={searchKeyword}
+      setSearchKeyword={setSearchKeyword}
     />
   );
 };

@@ -1,23 +1,33 @@
 import { useQuery } from "@apollo/client";
+import { useDebounce } from "use-debounce/lib";
 
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = ({ selectedOrder }) => {
-  const getOrder = () => {
+const useRepositories = ({ selectedOrder, searchKeyword }) => {
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
+
+  const getQueryParams = () => {
     switch (selectedOrder) {
       case "latest":
-        return {};
+        return { searchKeyword: debouncedSearchKeyword };
       case "highest":
-        return { orderBy: "RATING_AVERAGE" };
+        return {
+          orderBy: "RATING_AVERAGE",
+          searchKeyword: debouncedSearchKeyword,
+        };
       case "lowest":
-        return { orderBy: "RATING_AVERAGE", orderDirection: "ASC" };
+        return {
+          orderBy: "RATING_AVERAGE",
+          orderDirection: "ASC",
+          searchKeyword: debouncedSearchKeyword,
+        };
       default:
-        console.log("Something went wrong.");
+        return { searchKeyword: debouncedSearchKeyword };
     }
   };
 
   const { data, loading } = useQuery(GET_REPOSITORIES, {
-    variables: getOrder(),
+    variables: getQueryParams(),
     fetchPolicy: "cache-and-network",
   });
 

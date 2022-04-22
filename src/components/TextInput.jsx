@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 20,
     paddingVertical: 15,
+    backgroundColor: theme.colors.white,
   },
   error: {
     borderColor: theme.colors.error,

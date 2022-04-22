@@ -11,7 +11,8 @@ import theme from "../../theme";
 const styles = StyleSheet.create({
   reviewContainer: {
     flexDirection: "row",
-    margin: 20,
+    backgroundColor: theme.colors.white,
+    padding: 20,
   },
   reviewInfo: {
     flexDirection: "column",

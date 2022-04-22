@@ -9,7 +9,8 @@ import Text from "../Text";
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    margin: 20,
+    backgroundColor: theme.colors.white,
+    padding: 20,
   },
   repoStats: {
     flexDirection: "row",

@@ -12,8 +12,9 @@ import useCreateReview from "../hooks/useCreateReview";
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    margin: 20,
+    padding: 20,
     justifyContent: "space-between",
+    // backgroundColor: theme.colors.white,
   },
   createReviewText: {
     color: "white",
