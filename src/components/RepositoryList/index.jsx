@@ -1,13 +1,36 @@
-import { FlatList, View, StyleSheet, Pressable } from "react-native";
+import { FlatList, View, Pressable } from "react-native";
 import { useNavigate } from "react-router-native";
+import { Picker } from "@react-native-picker/picker";
+
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../../hooks/useRepositories";
 
 import theme from "../../theme";
+import { useState } from "react";
 
 const ItemSeparator = () => <View style={theme.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+const OrderPicker = ({ selectedOrder, setSelectedOrder }) => {
+  return (
+    <View style={{ backgroundColor: "#ebebeb" }}>
+      <Picker
+        style={{ marginHorizontal: 15 }}
+        selectedValue={selectedOrder}
+        onValueChange={(itemValue, itemIndex) => setSelectedOrder(itemValue)}
+      >
+        <Picker.Item label="Latest repositories" value="latest" />
+        <Picker.Item label="Highest rated repositories" value="highest" />
+        <Picker.Item label="Lowest rated repositories" value="lowest" />
+      </Picker>
+    </View>
+  );
+};
+
+export const RepositoryListContainer = ({
+  repositories,
+  selectedOrder,
+  setSelectedOrder,
+}) => {
   let navigate = useNavigate();
 
   const handlePress = (id) => {
@@ -30,15 +53,29 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
+      ListHeaderComponent={
+        <OrderPicker
+          selectedOrder={selectedOrder}
+          setSelectedOrder={setSelectedOrder}
+        />
+      }
       renderItem={renderItem}
     />
   );
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [selectedOrder, setSelectedOrder] = useState("latest");
 
-  return <RepositoryListContainer repositories={repositories} />;
+  const { repositories } = useRepositories({ selectedOrder });
+
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      selectedOrder={selectedOrder}
+      setSelectedOrder={setSelectedOrder}
+    />
+  );
 };
 
 export default RepositoryList;
