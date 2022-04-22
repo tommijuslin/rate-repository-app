@@ -9,25 +9,26 @@ const useRepositories = ({ selectedOrder, searchKeyword }) => {
   const getQueryParams = () => {
     switch (selectedOrder) {
       case "latest":
-        return { searchKeyword: debouncedSearchKeyword };
+        return {};
       case "highest":
         return {
           orderBy: "RATING_AVERAGE",
-          searchKeyword: debouncedSearchKeyword,
         };
       case "lowest":
         return {
           orderBy: "RATING_AVERAGE",
           orderDirection: "ASC",
-          searchKeyword: debouncedSearchKeyword,
         };
       default:
-        return { searchKeyword: debouncedSearchKeyword };
+        return {};
     }
   };
 
+  const queryParams = getQueryParams();
+  queryParams.searchKeyword = debouncedSearchKeyword;
+
   const { data, loading } = useQuery(GET_REPOSITORIES, {
-    variables: getQueryParams(),
+    variables: queryParams,
     fetchPolicy: "cache-and-network",
   });
 
