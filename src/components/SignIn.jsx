@@ -11,9 +11,7 @@ import theme from "../theme";
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
     margin: 20,
-    justifyContent: "space-between",
   },
   signText: {
     color: "white",
@@ -50,7 +48,7 @@ const SignInForm = ({ onSubmit }) => {
       />
       <ItemSeparator />
       <Pressable onPress={onSubmit} style={theme.button}>
-        <Text style={styles.signText}>Sign in</Text>
+        <Text style={theme.buttonText}>Sign in</Text>
       </Pressable>
     </View>
   );

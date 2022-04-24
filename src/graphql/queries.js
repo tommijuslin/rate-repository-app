@@ -39,6 +39,7 @@ export const GET_REPOSITORY = gql`
   query ($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
       ...RepositoryFields
+      url
       reviews(first: $first, after: $after) {
         edges {
           node {
@@ -67,6 +68,7 @@ export const GET_CURRENT_USER = gql`
           node {
             ...ReviewFields
             repository {
+              id
               fullName
             }
           }

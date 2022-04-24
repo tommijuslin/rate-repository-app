@@ -32,7 +32,10 @@ const theme = {
     backgroundColor: "#0366d6",
     borderRadius: 5,
     paddingVertical: 20,
-    justifyContent: "center",
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 };
 

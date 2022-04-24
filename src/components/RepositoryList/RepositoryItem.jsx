@@ -8,7 +8,6 @@ import Text from "../Text";
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     backgroundColor: theme.colors.white,
     padding: 20,
   },
@@ -17,17 +16,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 50,
     justifyContent: "space-between",
-  },
-  githubButton: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    marginTop: 20,
-    paddingVertical: 20,
-    justifyContent: "center",
-  },
-  githubText: {
-    color: "white",
-    textAlign: "center",
   },
 });
 
@@ -51,9 +39,11 @@ const RepositoryItem = ({ item, showButton }) => {
         <RepositoryStat stat={item.ratingAverage} label="Rating" />
       </View>
       {showButton && (
-        <Pressable onPress={onSubmit} style={styles.githubButton}>
-          <Text style={styles.githubText}>Open in GitHub</Text>
-        </Pressable>
+        <View style={{ marginTop: 15 }}>
+          <Pressable onPress={onSubmit} style={theme.button}>
+            <Text style={theme.buttonText}>Open in GitHub</Text>
+          </Pressable>
+        </View>
       )}
     </View>
   );
