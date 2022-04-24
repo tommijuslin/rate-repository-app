@@ -55,6 +55,7 @@ const AppBar = () => {
         {data && data.me ? (
           <>
             <AppBarTab to="/createreview" text="Create a review" />
+            <AppBarTab to="/myreviews" text="My reviews" />
             <SignOutTab onPress={logout} />
           </>
         ) : (

@@ -1,4 +1,9 @@
 import { gql } from "@apollo/client";
+import {
+  REPOSITORY_FIELDS,
+  REVIEW_FIELDS,
+  PAGE_INFO_FIELDS,
+} from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query (
@@ -17,69 +22,62 @@ export const GET_REPOSITORIES = gql`
     ) {
       edges {
         node {
-          id
-          ownerAvatarUrl
-          fullName
-          description
-          language
-          stargazersCount
-          forksCount
-          reviewCount
-          ratingAverage
+          ...RepositoryFields
         }
         cursor
       }
       pageInfo {
-        endCursor
-        startCursor
-        hasNextPage
+        ...PageInfoFields
       }
     }
   }
+  ${REPOSITORY_FIELDS}
+  ${PAGE_INFO_FIELDS}
 `;
 
 export const GET_REPOSITORY = gql`
   query ($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
-      id
-      ownerAvatarUrl
-      fullName
-      description
-      language
-      stargazersCount
-      forksCount
-      reviewCount
-      ratingAverage
-      url
+      ...RepositoryFields
       reviews(first: $first, after: $after) {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
+            ...ReviewFields
+          }
+          cursor
+        }
+        pageInfo {
+          ...PageInfoFields
+        }
+      }
+    }
+  }
+  ${REPOSITORY_FIELDS}
+  ${REVIEW_FIELDS}
+  ${PAGE_INFO_FIELDS}
+`;
+
+export const GET_CURRENT_USER = gql`
+  query ($includeReviews: Boolean = false) {
+    me {
+      id
+      username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...ReviewFields
+            repository {
+              fullName
             }
           }
           cursor
         }
         pageInfo {
-          endCursor
-          startCursor
-          hasNextPage
+          ...PageInfoFields
         }
       }
     }
   }
-`;
-
-export const GET_CURRENT_USER = gql`
-  query {
-    me {
-      id
-      username
-    }
-  }
+  ${REVIEW_FIELDS}
+  ${PAGE_INFO_FIELDS}
 `;
