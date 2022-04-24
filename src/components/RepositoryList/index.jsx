@@ -21,6 +21,7 @@ const ItemSeparator = () => <View style={theme.separator} />;
 
 export const RepositoryListContainer = ({
   repositories,
+  onEndReach,
   selectedOrder,
   setSelectedOrder,
   searchKeyword,
@@ -61,6 +62,8 @@ export const RepositoryListContainer = ({
         </View>
       }
       renderItem={renderItem}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
@@ -69,14 +72,20 @@ const RepositoryList = () => {
   const [selectedOrder, setSelectedOrder] = useState();
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const { repositories } = useRepositories({
+  const { repositories, fetchMore } = useRepositories({
+    first: 8,
     selectedOrder,
     searchKeyword,
   });
 
+  const onEndReach = () => {
+    fetchMore();
+  };
+
   return (
     <RepositoryListContainer
       repositories={repositories}
+      onEndReach={onEndReach}
       selectedOrder={selectedOrder}
       setSelectedOrder={setSelectedOrder}
       searchKeyword={searchKeyword}

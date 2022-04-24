@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import Text from "../Text";
 import RepositoryItem from "./RepositoryItem";
 import useRepository from "../../hooks/useRepository";
-import useReviews from "../../hooks/useReviews";
 
 import theme from "../../theme";
 
@@ -62,20 +61,9 @@ const ReviewItem = ({ review }) => {
 
 const ItemSeparator = () => <View style={theme.separator} />;
 
-const SingleRepository = () => {
-  const repository = useRepository();
-  const reviews = useReviews();
-
-  if (repository.loading || reviews.loading) {
-    return <Text>loading...</Text>;
-  }
-
-  if (repository.error || reviews.error) {
-    console.log("ya dun goofed");
-  }
-
-  const reviewNodes = reviews
-    ? reviews.data.edges.map((edge) => edge.node)
+const SingleRepositoryContainer = ({ repository, onEndReach }) => {
+  const reviewNodes = repository
+    ? repository.reviews.edges.map((edge) => edge.node)
     : [];
 
   return (
@@ -84,12 +72,33 @@ const SingleRepository = () => {
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={() => (
+      ListHeaderComponent={
         <View>
-          <RepositoryItem item={repository.data} showButton={true} />
+          <RepositoryItem item={repository} showButton={true} />
           <ItemSeparator />
         </View>
-      )}
+      }
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
+    />
+  );
+};
+
+const SingleRepository = () => {
+  const { repository, fetchMore } = useRepository({ first: 6 });
+
+  if (!repository) {
+    return <Text>Loading...</Text>;
+  }
+
+  const onEndReach = () => {
+    fetchMore();
+  };
+
+  return (
+    <SingleRepositoryContainer
+      repository={repository}
+      onEndReach={onEndReach}
     />
   );
 };

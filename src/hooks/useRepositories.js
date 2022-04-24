@@ -3,7 +3,7 @@ import { useDebounce } from "use-debounce/lib";
 
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = ({ selectedOrder, searchKeyword }) => {
+const useRepositories = ({ first, selectedOrder, searchKeyword }) => {
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
 
   const getQueryParams = () => {
@@ -24,15 +24,36 @@ const useRepositories = ({ selectedOrder, searchKeyword }) => {
     }
   };
 
-  const queryParams = getQueryParams();
-  queryParams.searchKeyword = debouncedSearchKeyword;
+  const variables = getQueryParams();
+  variables.searchKeyword = debouncedSearchKeyword;
+  variables.first = first;
 
-  const { data, loading } = useQuery(GET_REPOSITORIES, {
-    variables: queryParams,
+  const { data, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
+    variables,
     fetchPolicy: "cache-and-network",
   });
 
-  return { repositories: data ? data.repositories : undefined, loading };
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
+
+  return {
+    repositories: data?.repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    ...result,
+  };
 };
 
 export default useRepositories;
